@@ -1,0 +1,121 @@
+Semana 03
+
+    segunda
+
+        estudos
+
+            introdução
+                python é uma linguagem orientada a objetos entao voce pode organizar um codigo em classes e utilizar as interações entre 
+                elas pra isso,
+                classes = base de objetos, conjunto de atributos e metodos que o objeto vai poder realizar, exp molde de biscoito
+                objetos = criado a partir de uma classe, consegue guardar informaçoes , exp biscoito de morango pequeno
+                instancia = ato de criar um objeto a partir de uma classe
+                atributos = informações sobre o objeto, aquilo que se tem, exp sabor=morango tamanho=pequeno massa=crocante
+                metodos = ações que o objeto pode realizar, aquilo que se faz, exp esquentar congelar comer cortar
+                estado = conjunto dos atributos de um objeto atual
+            
+            classes/objetos
+                class NomeClasse = cria a classe e define o nome dela, usar PascalCase pra nome de classes
+                objeto = NomeClasse() = cria o objeto seguindo a base da classe
+            
+            atributos/metodos
+                def _init_ = define os atributos especificos de cada objeto
+                toda variavel fora do init = define atributos da classe, ou seja todos os objetos irao possuir esses atributos
+                atributos de classe: sao atributos que todos os objetos criados a partir da classe vao possuir, nao é nescessario criar um
+                objeto pra usar esses atributos apenas criar a classe
+                atributos de objeto: sao atributos definidos pra cada objetos, podem ser iguais aos de outros, é nescessario criar uma 
+                classe e um objeto dessa classe pra poder usar los
+                qualquer def dentro da classe menos init: metodos sao funções dentro das classes que os objetos a partir dessa classe 
+                podem realizar
+            
+        projeto
+            
+            reformulação
+                decidi comeeçar o projeto do inicio novamente com uma versao V2 e mudei um pouco do modelo final, agora alem de um sistema
+                de academia tambem vai funcionar como um gestor de negocios e um ecommerce pra melhorar a apresentaçao no final da mentoria,
+                alem disso vou aproveitar pra evitar cometer erross que cometi na V1 como codigo muito grande e perder muito tempo com
+                interface e outras coisas menos importantes que o aprendizado, vou usar oque aprendi nas semanas 1 e 2 desde o inicio
+                estrutura nova:
+                ACADEMIAV2
+                 app
+                  models
+                   exercicio.py
+                   usuario.py
+                  services
+                   armazenamento.py
+                  utils
+                   auxiliares.py
+                  main.py
+                 data
+                 tests
+                 .gitignore
+                 readme.md
+                 requirements
+
+            usuario
+                atributos:nome, idade, peso, altura, sexo, treino. parecido com V1
+                metodos: atualizar (peso, altura), treino (adicionar e remover eexercicio), usuario para dict(transforma a classe usuario
+                em dict pra salvar no json)
+            
+            exercicio
+                atributos: nome, grupo muscular, series e repetiçoes
+                metodos: editar (series e repetiçoes)
+
+            utils
+                criei função confirmar é so uma funçao que recebe uma pergunta e retorna True se usuario repsponder S Flase se responder N
+                e roda denovo se nao for nenhuma das duas
+            
+            armazenamento
+                criei funçao pra carregar os usuarios do json num dict, adionar um usuario nesse dict, e salvar novamente o dict no json 
+                com o usuario novo adicionado, nao consegui salvar o usuario com seus treinos por que tava dando problema em transforma a
+                os objetos exercicios em json entao resolvo depois
+
+            main
+                interliguei usuarios e exercicio importando os 2 como pacotes pro main e fiz um pequeno programa que cria usuario, edita
+                peso e altura, depois cria exercicio, adiciona e remove do treino do usuario, no final de cada mostrando que ta dando certo.
+                instanciei um usuario, um exercicio depois salvei o usuario no json e deu certo, persistencia funcionando.
+    
+    terça
+
+        estudos
+
+            init e self
+                init = funçao embutida das classees utilizada para definir os atributos de instancia do objetos
+                self = parametro utilizado pra referenciar aos atributos de instancia do proprio objeto, portanto self.atributo vai
+                informar o atributo do objeto daquele momento
+                atributo de instancia = sao os atributos definidos no init que podem ser chamados utilizadno o self, atributos do objeto
+                atributo de classe = sao atributos definidos para todas as classes, sem usar o self, atributos da classe
+                class Usuario:
+                    def __init__(self, nome):
+                        self.nome = nome # atributo de instancia, cada usuario vai ter um nome diferente
+                        banco = 'Bradesco' # atributo de classe, todo usuario vai pertencer ao banco 'Bradesco'
+                usuario.nome = verifica o objeto usuario e procura seu atributo nome e retorna o nome guardado nesse atributo
+                self.nome = nome define o atributo do objeto ou classe como nome, nome = nome nao vai mudar nada no objeto
+                é melhor criar uma classe usuario ao inves de dicionario por 2 motivos principais:
+                atributos e metodos, com dicionarios voce conseguia apenas guardar pares com chaves valores sem definir a ação desses usu
+                arios, com classes voce consegue definir atributos e metodos que todo usuario irao poder realizar, alem de criar um modelo
+                reutilizavel pra todos os usuarios
+                organização do codigo, voce consegue encurtar o codigo e deixalo mais organizado com cada classe interagindo entre si e com
+                funçoes principais ao inves de ter um dict que deve ser repassado de função em função pra poder realizar
+
+            metodos
+                metodos de instancia = metodos definidos dentro das classes que cada objeto podera realizar, def metodo(self):
+                self dentro dos metodos referencia o obejto e serve pra utilizar eles nos metodos caso queira
+                metodos de instancia podem receber parametros de fora alem do self
+                metodos de instancia podem alterar atributos do objeto dentro deles, self.idade += 1 idade do objeto agora é 1 a mais
+                metodos de instancia podem retornar valores sejam atributos ou nao
+                metodos sao funçoes realizadas pelos objetos e fazem parte da classe, funções normais sao funções de fora que sao utilizadas
+                para uso geral
+                a forma certa de reponsabilizar um objeto é dispor a ele apenas atributos e metodos que façam sentido a ele, qualquer metodo
+                que modifique o ambiente geral onde o objeto esta inserido nao é correto de ser adicionado ao proprio objeto, por exemplo
+                nao seria bom um usuario ser reponsavel pelo salvamento de dados num sisitema, o ideal é separar a usuario apenas os
+                metodos que façam sentido a ele e uma outra calsse gerenciadordebacno seria responsavel pelo metodo salvar dados no sistema
+                seria ruim colocar todas as funcionalidades do sistema na classe aluno porque seriam atribuidos metodos que nao sao
+                responsabilidade do aluno alem de deixar o codigo mais desorganizado, o ideal é separar as responsabilidades omaximo ideal,
+                por exemplo se eu quisesse alterar um treino do aluno o ideal seria uma classe treino com um objeto treinodoaluno onde voce
+                pudesse modificar esse treino diretamente nos metodos da classe treino ao inves de ir nos metodos do aluno
+            
+            
+            
+
+
